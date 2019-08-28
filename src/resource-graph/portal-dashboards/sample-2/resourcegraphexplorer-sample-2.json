@@ -1,0 +1,244 @@
+{
+    "properties": {
+      "lenses": {
+        "0": {
+          "order": 0,
+          "parts": {
+            "0": {
+              "position": {
+                "x": 0,
+                "y": 0,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "Virtual Machines (count) by family"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.compute/virtualmachines\"\r\n| extend Size = tostring(properties.hardwareProfile.vmSize)\r\n| extend Family = extract('([^_]+)_', 1, Size, typeof(string))\r\n| summarize VMCount=count() by Family\r\n| order by VMCount desc\r\n|extend ['Count (Virtual Machines)']=VMCount\r\n| project Family, ['Count (Virtual Machines)']"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            },
+            "1": {
+              "position": {
+                "x": 6,
+                "y": 0,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "SQL databases (count) by tier"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.sql/servers/databases\"\r\n| summarize DBCount=count() by Tier=tostring(properties.currentSku.tier)\r\n| order by DBCount desc\r\n|extend ['Count (SQL Databases)']=DBCount\r\n| project Tier, ['Count (SQL Databases)']"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            },
+            "2": {
+              "position": {
+                "x": 12,
+                "y": 0,
+                "colSpan": 6,
+                "rowSpan": 2
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "Public IP addresses (count)"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.network/publicipaddresses\"\r\n| summarize ['Number of public IP addresses']=count()"
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryGridTile"
+              }
+            },
+            "3": {
+              "position": {
+                "x": 12,
+                "y": 2,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "Count of storage accounts by status"
+                  },
+                  {
+                    "name": "query",
+                    "value": " where type == \"microsoft.storage/storageaccounts\"\r\n | summarize StorageCount=count() by PrimaryStatus=tostring(properties.statusOfPrimary), SecondaryStatus=tostring(properties.statusOfSecondary)\r\n | extend SecondaryStatus= iff(strlen(SecondaryStatus) == 0, \"No secondary\", SecondaryStatus)\r\n | extend ['Count (Storage accounts)']=StorageCount\r\n | project-away StorageCount"
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryGridTile"
+              }
+            },
+            "4": {
+              "position": {
+                "x": 0,
+                "y": 3,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "SQL databases (count) by max size (GB)"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.sql/servers/databases\"\r\n| extend GB = todouble(properties.maxSizeBytes) / (1024 * 1024 * 1024)\r\n| summarize DBCount=count() by GB\r\n| order by GB desc\r\n|extend ['Count (SQL Databases)']=DBCount\r\n| project GB=strcat(tostring(GB), \" GB\"), ['Count (SQL Databases)']"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            },
+            "5": {
+              "position": {
+                "x": 6,
+                "y": 3,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "AppService apps (count) by status"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.web/sites\"\r\n| where kind == \"app\"\r\n| summarize SiteCount=count() by Status=tostring(properties.state) \r\n| order by SiteCount desc\r\n|extend ['Count (AppService Apps)']=SiteCount\r\n| project Status, ['Count (AppService Apps)']"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            },
+            "6": {
+              "position": {
+                "x": 0,
+                "y": 6,
+                "colSpan": 6,
+                "rowSpan": 2
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "Sum of disk size (GB) across all disks"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.compute/disks\"\r\n| extend SizeGB = tolong(properties.diskSizeGB)\r\n| summarize ['Total Disk Size (GB)']=sum(SizeGB)"
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryGridTile"
+              }
+            },
+            "7": {
+              "position": {
+                "x": 6,
+                "y": 6,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "CosmosDB accounts by Offer Type"
+                  },
+                  {
+                    "name": "query",
+                    "value": "  where type == \"microsoft.documentdb/databaseaccounts\"\r\n  | summarize CosmosDBCount=count() by ['Account Type']=tostring(properties.databaseAccountOfferType)\r\n  | order by CosmosDBCount desc\r\n  | extend ['Count (Cosmos DB accounts)']=CosmosDBCount\r\n | project-away CosmosDBCount"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            },
+            "8": {
+              "position": {
+                "x": 0,
+                "y": 8,
+                "colSpan": 6,
+                "rowSpan": 3
+              },
+              "metadata": {
+                "inputs": [
+                  {
+                    "name": "partTitle",
+                    "value": "Disks (count) by disk state"
+                  },
+                  {
+                    "name": "query",
+                    "value": "where type == \"microsoft.compute/disks\"\r\n| summarize DiskCount=count() by State=tostring(properties.diskState)\r\n| order by DiskCount desc\r\n| extend [\"Count (Disks)\"]=DiskCount\r\n| project State, [\"Count (Disks)\"]"
+                  },
+                  {
+                    "name": "chartType",
+                    "value": 1
+                  }
+                ],
+                "type": "Extension/HubsExtension/PartType/ArgQueryChartTile"
+              }
+            }
+          }
+        }
+      },
+      "metadata": {
+        "model": {
+          "timeRange": {
+            "value": {
+              "relative": {
+                "duration": 24,
+                "timeUnit": 1
+              }
+            },
+            "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+          }
+        }
+      }
+    },
+    "name": "Resource Graph Explorer - Sample Dashboard #2",
+    "type": "Microsoft.Portal/dashboards",
+    "location": "INSERT LOCATION",
+    "tags": {
+      "hidden-title": "Resource Graph Explorer - Sample Dashboard #2"
+    },
+    "apiVersion": "2015-08-01-preview"
+  }
