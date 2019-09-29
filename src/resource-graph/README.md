@@ -13,7 +13,7 @@ Resource Graph.
 
 ## Contents
 
-The content of the [Azure Resource Graph](https://docs.microsoft.com/azure/governance/resource-graph)]
+The content of the [Azure Resource Graph](https://docs.microsoft.com/azure/governance/resource-graph)
 samples is structured as follows:
 
 | File/folder          | Description                                |
