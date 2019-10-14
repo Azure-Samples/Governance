@@ -18,7 +18,7 @@ Explorer](https://docs.microsoft.com/azure/governance/resource-graph) queries an
 ## Running the sample
 
 1. Download the sample Azure portal dashboard definition file
-   (`resourcegraphexplorer-sample-2.json`).
+   (`resourcegraphexplorer-inventory.json`).
 
 1. In Azure portal, select **Dashboard** from the left pane.
 
