@@ -1,0 +1,654 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 19,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "# General information\n",
+                    "title": "",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 1,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Current Context (Tenant and Subscriptions)",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "distinct(tenantId), subscriptionId",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryGridTile",
+              "settings": {}
+            }
+          },
+          "2": {
+            "position": {
+              "x": 5,
+              "y": 1,
+              "colSpan": 9,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Resources by location",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "summarize count() by location | project  location, total=count_ \r\n\r\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 1,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "3": {
+            "position": {
+              "x": 14,
+              "y": 1,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Top 10 Resources by Type",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "summarize count() by type\r\n| project type, total=count_\r\n| top 10 by total",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "4": {
+            "position": {
+              "x": 0,
+              "y": 5,
+              "colSpan": 19,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "# Virtual Machines",
+                    "title": "",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          },
+          "5": {
+            "position": {
+              "x": 0,
+              "y": 6,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "VMs by Operating System",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend OsOffer = aliases['Microsoft.Compute/virtualMachines/storageProfile.imageReference.offer']\r\n| where type =~ 'Microsoft.Compute/virtualmachines'\r\n| summarize count() by tostring(OsOffer)\r\n| project OsOffer, total=count_",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "6": {
+            "position": {
+              "x": 5,
+              "y": 6,
+              "colSpan": 9,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "VMs by SKU",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend sku = aliases['Microsoft.Compute/virtualMachines/sku.name'] \r\n| where type=~'Microsoft.Compute/virtualMachines'\r\n| summarize count() by tostring(sku)\r\n| project sku, total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 1,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "7": {
+            "position": {
+              "x": 14,
+              "y": 6,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "VMs by Location",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "where type =~ 'Microsoft.Compute/virtualmachines'\r\n| summarize count() by location\r\n| project location, total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "8": {
+            "position": {
+              "x": 0,
+              "y": 10,
+              "colSpan": 19,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "# App Services",
+                    "title": "",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          },
+          "9": {
+            "position": {
+              "x": 0,
+              "y": 11,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "App Services by Kind",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend httpsOnly = aliases['Microsoft.Web/sites/httpsOnly'] \r\n| where type=~'Microsoft.Web/Sites'\r\n| summarize count() by kind\r\n| project kind, total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "10": {
+            "position": {
+              "x": 5,
+              "y": 11,
+              "colSpan": 9,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "App Service Plans by SKU",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend sku = aliases['Microsoft.Web/serverfarms/sku.name'] \r\n| where type=~'Microsoft.Web/serverfarms'\r\n| summarize count() by tostring(sku)\r\n| project sku, total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 1,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "11": {
+            "position": {
+              "x": 14,
+              "y": 11,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "HTTPS Only configuration disabled on App Services",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend httpsOnly = aliases['Microsoft.Web/sites/httpsOnly'] \r\n| where type=~'Microsoft.Web/Sites' and httpsOnly =~ 'false'\r\n| summarize count() by subscriptionId\r\n| project subscriptionId, total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "12": {
+            "position": {
+              "x": 0,
+              "y": 15,
+              "colSpan": 9,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Stopped App Sevices",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend state = aliases['Microsoft.Web/sites/state'] \r\n|extend hostname = aliases['Microsoft.Web/sites/defaultHostName']\r\n| where type=~'Microsoft.Web/Sites' and state =~ 'stopped'\r\n| project state, name, kind, hostname",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryGridTile",
+              "settings": {}
+            }
+          },
+          "13": {
+            "position": {
+              "x": 9,
+              "y": 15,
+              "colSpan": 10,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "App Service Plan Basic Information",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend NumberOfApps = aliases['Microsoft.Web/serverFarms/numberOfSites'] \r\n|where type=~'Microsoft.Web/serverfarms'\r\n| project Name=['name'], NumberOfApps, Location=['location']",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryGridTile",
+              "settings": {}
+            }
+          },
+          "14": {
+            "position": {
+              "x": 0,
+              "y": 18,
+              "colSpan": 19,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "# Storage Accounts",
+                    "title": "",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          },
+          "15": {
+            "position": {
+              "x": 0,
+              "y": 19,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Storage Account Configured with HTTPS Only Access",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend HTTPSOnly = aliases['Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly']\r\n| where type =~ \"microsoft.storage/storageaccounts\" and HTTPSOnly =~ 'false'\r\n| summarize count() by subscriptionId\r\n| project subscriptionId, Total=count_",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          },
+          "16": {
+            "position": {
+              "x": 5,
+              "y": 19,
+              "colSpan": 9,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Storage Accounts General Information",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "extend HTTPSOnly = aliases['Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly']\r\n| extend Type = aliases['Microsoft.Storage/storageAccounts/accountType']\r\n| extend BlobEncryption = aliases['Microsoft.Storage/storageAccounts/enableBlobEncryption']\r\n| extend FileEncryption = aliases['Microsoft.Storage/storageAccounts/enableFileEncryption']\r\n| where type =~ \"microsoft.storage/storageaccounts\"\r\n| project Name=['name'], Kind=['kind'], Type, HTTPSOnly, BlobEncryption, FileEncryption, Location=['location']",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryGridTile",
+              "settings": {}
+            }
+          },
+          "17": {
+            "position": {
+              "x": 14,
+              "y": 19,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "partTitle",
+                  "value": "Storage Accounts by Location",
+                  "isOptional": true
+                },
+                {
+                  "name": "query",
+                  "value": "where type =~ \"microsoft.storage/storageaccounts\"\r\n| summarize count() by location\r\n|project Location=['location'], Total=count_",
+                  "isOptional": true
+                },
+                {
+                  "name": "chartType",
+                  "value": 2,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ArgQueryChartTile",
+              "settings": {}
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_Subscription": {
+              "model": {
+                "operator": "equals",
+                "selectAllState": "all"
+              },
+              "displayCache": {
+                "name": "Subscription",
+                "value": "all"
+              },
+              "filteredPartIds": [
+                "StartboardPart-ArgQueryGridTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d007",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d009",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d00b",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d00f",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d011",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d013",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d017",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d019",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d01b",
+                "StartboardPart-ArgQueryGridTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d01d",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d021",
+                "StartboardPart-ArgQueryChartTile-3abb28c9-dda1-4a3c-9abf-0fac6d48d335",
+                "StartboardPart-ArgQueryGridTile-f5b655df-dbdd-4b95-a396-57353d989007",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989009",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d98900b",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d98900f",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989011",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989013",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989017",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989019",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d98901b",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d98901d",
+                "StartboardPart-ArgQueryGridTile-f5b655df-dbdd-4b95-a396-57353d98901f",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989023",
+                "StartboardPart-ArgQueryChartTile-f5b655df-dbdd-4b95-a396-57353d989149",
+                "StartboardPart-ArgQueryGridTile-b10e488f-b1e2-4529-ad78-c969dcd96007",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96009",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd9600b",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd9600f",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96011",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96013",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96017",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96019",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd9601b",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd9601d",
+                "StartboardPart-ArgQueryGridTile-b10e488f-b1e2-4529-ad78-c969dcd9601f",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96023",
+                "StartboardPart-ArgQueryChartTile-b10e488f-b1e2-4529-ad78-c969dcd96025",
+                "StartboardPart-ArgQueryGridTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb007",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb009",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb00b",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb00f",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb011",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb013",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb017",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb019",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb01b",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb01d",
+                "StartboardPart-ArgQueryGridTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb01f",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb023",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb025",
+                "StartboardPart-ArgQueryGridTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb67b",
+                "StartboardPart-ArgQueryGridTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb6ab",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb8a4",
+                "StartboardPart-ArgQueryGridTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb8e0",
+                "StartboardPart-ArgQueryChartTile-ad7c3293-3d36-4bc0-b6a5-66b10c4cb8f8",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa64007",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64009",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6400b",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6400f",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64011",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64013",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64017",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64019",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6401d",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa6401f",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64023",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64027",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6402d",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa6402f",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64031",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa64398",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa643f8",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa643fa",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa643fc",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64400",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64402",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64404",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64408",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6440a",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6440c",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa6440e",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa64410",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64414",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa64416",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64418",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6441c",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa6441e",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa644e3",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644e5",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644e7",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644eb",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644ed",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644ef",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644f3",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644f5",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644f7",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa644f9",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa644fb",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa644ff",
+                "StartboardPart-ArgQueryGridTile-208e2285-9873-4429-8951-2f4aaaa64501",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64503",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64507",
+                "StartboardPart-ArgQueryChartTile-208e2285-9873-4429-8951-2f4aaaa64509",
+                "StartboardPart-ArgQueryGridTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8007",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8009",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f800b",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f800f",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8011",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8013",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8017",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8019",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f801b",
+                "StartboardPart-ArgQueryGridTile-f45a1dbe-2953-47bf-aa1a-20a5d10f801d",
+                "StartboardPart-ArgQueryGridTile-f45a1dbe-2953-47bf-aa1a-20a5d10f801f",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8023",
+                "StartboardPart-ArgQueryGridTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8025",
+                "StartboardPart-ArgQueryChartTile-f45a1dbe-2953-47bf-aa1a-20a5d10f8027"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "Lighthouse / Resource Graph - Inventory",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "Lighthouse / Resource Graph - Inventory"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
