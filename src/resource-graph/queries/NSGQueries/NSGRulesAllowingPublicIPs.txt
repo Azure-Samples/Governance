@@ -16,8 +16,8 @@ destIPs = iif(array_length(destinationAddressPrefixes) == 0, pack_array(destinat
 | extend ipRangeSplit = split(ipRange, "/")
 | extend ipRangeStart = parse_ipv4(tostring(ipRangeSplit[0])), 
 ipRangeEnd = iif(array_length(ipRangeSplit) == 2, tolong(parse_ipv4(tostring(ipRangeSplit[0])) + pow(2, 32 - toint(ipRangeSplit[1])) - 1), parse_ipv4(tostring(ipRangeSplit[0])))
-| extend ContainsPrivateIp = iif((ipRangeStart >= parse_ipv4("10.0.0.0") and ipRangeEnd <= parse_ipv4("10.255.255.255")) 
+| extend RuleContainsOnlyPrivateIpOrTags = iif((ipRangeStart >= parse_ipv4("10.0.0.0") and ipRangeEnd <= parse_ipv4("10.255.255.255")) 
 or (ipRangeStart >= parse_ipv4("172.16.0.0") and ipRangeEnd <= parse_ipv4("172.31.255.255")) 
 or (ipRangeStart >= parse_ipv4("192.168.0.0") and ipRangeEnd <= parse_ipv4("192.168.255.255")), true, ipRange != "*" and array_length(ipRangeSplit) == 1 and isnull(parse_ipv4(ipRange)))
-| where ContainsPrivateIp == false
+| where RuleContainsOnlyPrivateIpOrTags == false
 | summarize violatingIpRanges = makeset(ipRange) by NSG, NSGRule, subscriptionId, resourceGroup
