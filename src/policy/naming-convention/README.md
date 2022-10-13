@@ -16,8 +16,8 @@ This Azure policy governs the naming convention for virtual machines within the 
 
 ### Azure Portal
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_Policy/CreatePolicyDefinitionBlade/uri/)
-[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/?#blade/Microsoft_Azure_Policy/CreatePolicyDefinitionBlade/uri/)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_Policy/CreatePolicyDefinitionBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2FGovernance%2Fmaster%2Fsrc%2Fpolicy%2Fnaming-convention%2Fpolicy.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/?#blade/Microsoft_Azure_Policy/CreatePolicyDefinitionBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2FGovernance%2Fmaster%2Fsrc%2Fpolicy%2Fnaming-convention%2Fpolicy.json)
 
 ### Azure PowerShell
 
@@ -27,8 +27,8 @@ $definition = New-AzPolicyDefinition `
     -Name 'Naming_VirtualMachine_Deny' `
     -DisplayName 'Naming_VirtualMachine_Deny' `
     -Description 'This policy governs the naming convention for virtual machines.' `
-    -Policy '' `
-    -Parameter '' `
+    -Policy 'https://raw.githubusercontent.com/Azure-Samples/Governance/master/src/policy/naming-convention/policy.rules.json' `
+    -Parameter 'https://raw.githubusercontent.com/Azure-Samples/Governance/master/src/policy/naming-convention/policy.parameters.json' `
     -Mode 'All' `
     -Metadata '{"category":"Governance"}'
 
@@ -51,8 +51,8 @@ az policy definition create \
     --name 'Naming_VirtualMachine_Deny' \
     --display-name 'Naming_VirtualMachine_Deny' \
     --description 'This policy governs the naming convention for virtual machines.' \
-    --rules '' \
-    --params '' \
+    --rules 'https://raw.githubusercontent.com/Azure-Samples/Governance/master/src/policy/naming-convention/policy.rules.json' \
+    --params 'https://raw.githubusercontent.com/Azure-Samples/Governance/master/src/policy/naming-convention/policy.parameters.json' \
     --mode All
 
 az policy assignment create \
