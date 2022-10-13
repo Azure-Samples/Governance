@@ -1,0 +1,25 @@
+{
+    "if": {
+        "allOf": [
+            {
+                "field": "name",
+                "notMatch": "[concat('vm', parameters('Application'), parameters('DataCenterCountry'), parameters('DataCenterLocation'), parameters('Environment'), parameters('WebTier'), '#')]"
+            },
+            {
+                "field": "name",
+                "notMatch": "[concat('vm', parameters('Application'), parameters('DataCenterCountry'), parameters('DataCenterLocation'), parameters('Environment'), parameters('LogicTier'), '#')]"
+            },
+            {
+                "field": "name",
+                "notMatch": "[concat('vm', parameters('Application'), parameters('DataCenterCountry'), parameters('DataCenterLocation'), parameters('Environment'), parameters('DataTier'), '#')]"
+            },
+            {
+                "field": "type",
+                "equals": "Microsoft.Compute/virtualMachines"
+            }
+        ]
+    },
+    "then": {
+        "effect": "deny"
+    }
+}

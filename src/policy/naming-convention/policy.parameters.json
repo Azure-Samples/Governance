@@ -1,0 +1,128 @@
+{
+    "Application": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 - 6 characters for the application name or abbreviation",
+            "displayName": "Application Name or Abbreviation"
+        }
+    },
+    "Environment": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 character for the environment abbreviation: 'd' = Dev, 'p' = Production, 's' = Stage, & 't' = Test ",
+            "displayName": "Environment Abbreviation"
+        },
+        "allowedValues": [
+            "d",
+            "p",
+            "s",
+            "t"
+        ]
+    },
+    "DataCenterCountry": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 2 characters to abbreviate the Azure country (e.g., 'us' for United States or 'ca' for Canada).",
+            "displayName": "Data Center Country Abbreviation"
+        },
+        "defaultValue": "us",
+        "allowedValues": [
+            "ae",
+            "at",
+            "au",
+            "br",
+            "ca",
+            "ch",
+            "cl",
+            "cn",
+            "de",
+            "dk",
+            "es",
+            "fr",
+            "gb",
+            "gr",
+            "hk",
+            "ie",
+            "il",
+            "in",
+            "it",
+            "jp",
+            "kr",
+            "mx",
+            "nl",
+            "no",
+            "nz",
+            "pl",
+            "qa",
+            "se",
+            "sg",
+            "tw",
+            "us",
+            "za"
+        ]
+    },
+    "DataCenterLocation": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 - 2 characters to abbreviate the Azure location (e.g., 'e' for East US or 'e2' for East US 2).",
+            "displayName": "Data Center Location Abbreviation"
+        },
+        "allowedValues": [
+            "e",
+            "e2",
+            "e3",
+            "c",
+            "c2",
+            "dc",
+            "de",
+            "ga",
+            "gt",
+            "gv",
+            "n",
+            "n2",
+            "nc",
+            "ne",
+            "s",
+            "sc",
+            "se",
+            "w",
+            "w2",
+            "w3",
+            "wc"
+        ]
+    },
+    "WebTier": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 character to abbreviate the web or presentation tier: 'p' = Presentation & 'w' = Web",
+            "displayName": "Web Tier Abbreviation"
+        },
+        "defaultValue": "w",
+        "allowedValues": [
+            "w",
+            "p"
+        ]
+    },
+    "LogicTier": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 character to abbreviate the business logic tier:  'l' = Logic.",
+            "displayName": "Logic Tier Abbreviation"
+        },
+        "defaultValue": "l",
+        "allowedValues": [
+            "l"
+        ]
+    },
+    "DataTier": {
+        "type": "String",
+        "metadata": {
+            "description": "Use 1 character to abbreviate the database tier: 'd' = Database.",
+            "displayName": "Data Tier Abbreviation"
+        },
+        "defaultValue": "d",
+        "allowedValues": [
+            "d"
+        ]
+    }
+}
