@@ -19,6 +19,7 @@ The content of the **Azure-samples/Governance** repository is structured as foll
 | File/folder          | Description                                |
 |----------------------|--------------------------------------------|
 | `src`                | Samples root folder.                       |
+| -- `policy`          | Samples for [Azure Policy](https://learn.microsoft.com/azure/governance/policy/). |
 | -- `resource-graph`  | Samples for [Azure Resource Graph](https://docs.microsoft.com/azure/governance/resource-graph). |
 | `.gitignore`         | Define what to ignore at commit time.      |
 | `CHANGELOG.md`       | List of changes to the sample.             |
