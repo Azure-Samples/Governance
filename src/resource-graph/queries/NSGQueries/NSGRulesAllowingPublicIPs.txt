@@ -1,0 +1,23 @@
+/*
+ * The below query targets to filter all the NSG rules which is configured to allow public IPs.
+ * The data source for the below query is Azure Resource Graph RP.
+ */
+
+Resources
+| where type =~ "microsoft.network/networksecuritygroups"
+| project nsgRules = parse_json(parse_json(properties).securityRules), NSG = name, subscriptionId, resourceGroup
+| mvexpand nsgRule = nsgRules
+| where nsgRule.properties.access =~ "allow" and nsgRule.properties.priority < 65000
+| project sourceAddressPrefix = nsgRule.properties.sourceAddressPrefix, sourceAddressPrefixes = nsgRule.properties.sourceAddressPrefixes,
+ destinationAddressPrefix = nsgRule.properties.destinationAddressPrefix, destinationAddressPrefixes = nsgRule.properties.destinationAddressPrefixes, NSG, NSGRule = tostring(nsgRule.name), subscriptionId, resourceGroup
+| project sourceIPs = iif(array_length(sourceAddressPrefixes) == 0, pack_array(sourceAddressPrefix), sourceAddressPrefixes), 
+destIPs = iif(array_length(destinationAddressPrefixes) == 0, pack_array(destinationAddressPrefix), destinationAddressPrefixes), NSG, NSGRule, subscriptionId, resourceGroup
+| mvexpand ipRange = array_concat(sourceIPs, destIPs) to typeof(string)
+| extend ipRangeSplit = split(ipRange, "/")
+| extend ipRangeStart = parse_ipv4(tostring(ipRangeSplit[0])), 
+ipRangeEnd = iif(array_length(ipRangeSplit) == 2, tolong(parse_ipv4(tostring(ipRangeSplit[0])) + pow(2, 32 - toint(ipRangeSplit[1])) - 1), parse_ipv4(tostring(ipRangeSplit[0])))
+| extend RuleContainsOnlyPrivateIpOrTags = iif((ipRangeStart >= parse_ipv4("10.0.0.0") and ipRangeEnd <= parse_ipv4("10.255.255.255")) 
+or (ipRangeStart >= parse_ipv4("172.16.0.0") and ipRangeEnd <= parse_ipv4("172.31.255.255")) 
+or (ipRangeStart >= parse_ipv4("192.168.0.0") and ipRangeEnd <= parse_ipv4("192.168.255.255")), true, ipRange != "*" and array_length(ipRangeSplit) == 1 and isnull(parse_ipv4(ipRange)))
+| where RuleContainsOnlyPrivateIpOrTags == false
+| summarize violatingIpRanges = makeset(ipRange) by NSG, NSGRule, subscriptionId, resourceGroup
